@@ -70,15 +70,13 @@ void trata_button_0(uint gpio, uint32_t events)
     printf("A = %d\n", a); 
 
     //verifica se passou tempo suficiente desde o ultimo evento
-    if (current_time - last_time_0 > 200000)    // 200ms de debounce
+    if (current_time - last_time_0 > 5000000)    // ms de debounce
     {
         last_time_0 = current_time;          // Atualiza o tempo do ultimo evento
         printf("mudanca de estado do led. A = %d\n", a);
 
         a++;                                //Incrementa a variável de verificação
-        animacao_ativa_0 = true;            // Ativa a animação
-        animacao_ativa_1 = false;           // Desativa a outra animação
-        frame_atual_0 = 0;                  // Reinicia o frame
+      
     }
 }
 
@@ -96,9 +94,7 @@ void trata_button_1(uint gpio, uint32_t events)
         printf("mudanca de estado do led. B = %d\n", b);
 
         b++;                                //Incrementa a variável de verificação
-        animacao_ativa_1 = true;            // Ativa a animação
-        animacao_ativa_0 = false;           // Desativa a outra animação
-        frame_atual_1 = 0;                  // Reinicia o frame
+        
     }
 }
 
@@ -141,7 +137,7 @@ int main()
     gpio_set_irq_enabled_with_callback(button_1, GPIO_IRQ_EDGE_FALL, true, &trata_button_1);
 
    while (true) {
-    // Leitura dos botões
+    // Leitura dos botões     //*** Esta parte do código é desnecessária e pode ter tirado debounce de interrupção
     if (gpio_get(button_0) == 0) {
         animacao_ativa_0 = true;
     }
@@ -155,7 +151,7 @@ int main()
     if (animacao_ativa_0) {
         desenho_pio(animacao_botao0.frames[frame_atual_0], pio, sm, 1.0, 0.0, 0.0);
         frame_atual_0++;
-        desenhou_alguma_animacao = true;
+        desenhou_alguma_animacao = true; //Testar sem  isso
         if (frame_atual_0 >= 5) {
             frame_atual_0 = 0;
             animacao_ativa_0 = false;
@@ -166,19 +162,19 @@ int main()
     if (animacao_ativa_1) {
         desenho_pio(animacao_botao1.frames[frame_atual_1], pio, sm, 0.0, 0.0, 1.0);
         frame_atual_1++;
-        desenhou_alguma_animacao = true;
+        desenhou_alguma_animacao = true; // testar sem isso
         if (frame_atual_1 >= 5) {
             frame_atual_1 = 0;
             animacao_ativa_1 = false;
         }
     }
 
-    // Nenhuma animação - mantém apagado
+    // Nenhuma animação - mantém apagado //*** Já possui uma matriz de leds apagados
     if (!desenhou_alguma_animacao) {
-        desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0);
+        desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0); //matriz de led apagada
     }
 
-    sleep_ms(100); // pequeno atraso entre frames, ajuste conforme necessário
+    sleep_ms(150); // pequeno atraso entre frames, ajuste conforme necessário
 }
 
 }
