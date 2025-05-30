@@ -48,7 +48,7 @@ uint32_t matrix_rgb(double b, double r, double g)
     G = g * 255;
     B = b * 255;
     return (G << 24) | (R << 16) | (B << 8);
-}
+ }
 
 //rotina para acionar a matrix de leds - ws2812b
 void desenho_pio(double *desenho, PIO pio, uint sm, double r, double g, double b) {
@@ -141,7 +141,7 @@ int main()
     gpio_set_irq_enabled_with_callback(button_1, GPIO_IRQ_EDGE_FALL, true, &trata_button_1);
 
    while (true) {
-    // ✅ Leitura dos botões
+    // Leitura dos botões
     if (gpio_get(button_0) == 0) {
         animacao_ativa_0 = true;
     }
@@ -151,7 +151,7 @@ int main()
 
     bool desenhou_alguma_animacao = false;
 
-    // ▶️ Animação do botão 0 (Coração pulsante vermelho)
+    // Animação do botão 0 (Coração pulsante vermelho)
     if (animacao_ativa_0) {
         desenho_pio(animacao_botao0.frames[frame_atual_0], pio, sm, 1.0, 0.0, 0.0);
         frame_atual_0++;
@@ -162,7 +162,7 @@ int main()
         }
     }
 
-    // ▶️ Animação do botão 1 (Estrela girando azul)
+    // Animação do botão 1 (Estrela girando azul)
     if (animacao_ativa_1) {
         desenho_pio(animacao_botao1.frames[frame_atual_1], pio, sm, 0.0, 0.0, 1.0);
         frame_atual_1++;
@@ -173,7 +173,7 @@ int main()
         }
     }
 
-    // 💤 Nenhuma animação → mantém apagado
+    // Nenhuma animação - mantém apagado
     if (!desenhou_alguma_animacao) {
         desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0);
     }
