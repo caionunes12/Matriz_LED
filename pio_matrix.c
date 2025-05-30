@@ -36,6 +36,7 @@ int frame_atual_0 = 0;
 int frame_atual_1 = 0;
 bool animacao_ativa_0 = false;
 bool animacao_ativa_1 = false;
+bool alguma_animacao_ativa = false;  // Nova variável para controlar se alguma animação está ativa
 
 //vetor para criar imagem na matriz de led - LEDs apagados
 double desenho[25] =   {0.0, 0.0, 0.0, 0.0, 0.0,
@@ -183,11 +184,13 @@ int main()
 
    while (true) {
     // Leitura dos botões
-    if (gpio_get(button_0) == 0) {
+    if (gpio_get(button_0) == 0 && !alguma_animacao_ativa) {
         animacao_ativa_0 = true;
+        alguma_animacao_ativa = true;
     }
-    if (gpio_get(button_1) == 0) {
+    if (gpio_get(button_1) == 0 && !alguma_animacao_ativa) {
         animacao_ativa_1 = true;
+        alguma_animacao_ativa = true;
     }
 
     bool desenhou_alguma_animacao = false;
@@ -203,6 +206,7 @@ int main()
         if (frame_atual_0 >= 20) {
             frame_atual_0 = 0;
             animacao_ativa_0 = false;
+            alguma_animacao_ativa = false;
         }
     }
 
@@ -217,6 +221,7 @@ int main()
         if (frame_atual_1 >= 20) {
             frame_atual_1 = 0;
             animacao_ativa_1 = false;
+            alguma_animacao_ativa = false;
         }
     }
 
