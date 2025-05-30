@@ -152,7 +152,7 @@ int main()
         desenho_pio(animacao_botao0.frames[frame_atual_0], pio, sm, 1.0, 0.0, 0.0);
         frame_atual_0++;
         desenhou_alguma_animacao = true; //Testar sem  isso
-        if (frame_atual_0 >= 5) {
+        if (frame_atual_0 >= 15) {
             frame_atual_0 = 0;
             animacao_ativa_0 = false;
         }
@@ -163,7 +163,7 @@ int main()
         desenho_pio(animacao_botao1.frames[frame_atual_1], pio, sm, 0.0, 0.0, 1.0);
         frame_atual_1++;
         desenhou_alguma_animacao = true; // testar sem isso
-        if (frame_atual_1 >= 5) {
+        if (frame_atual_1 >= 15) {
             frame_atual_1 = 0;
             animacao_ativa_1 = false;
         }
@@ -174,7 +174,7 @@ int main()
         desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0); //matriz de led apagada
     }
 
-    sleep_ms(150); // pequeno atraso entre frames, ajuste conforme necessário
+    sleep_ms(150); // pequeno atraso entre frames, ajuste conforme necessário 150ms
 }
 
 }
