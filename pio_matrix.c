@@ -6,6 +6,7 @@
 #include "hardware/clocks.h"
 #include "hardware/adc.h"
 #include "pico/bootrom.h"
+#include "hardware/pwm.h"
 #include "animacoes.h"
 
 //arquivo .pio
@@ -20,6 +21,9 @@
 //botão de interupção
 const uint button_0 = 5;
 const uint button_1 = 6;
+
+//pino do buzzer
+const uint BUZZER_PIN = 21;
 
 // Variáveis para debounce
 uint32_t last_time_0 = 0;
@@ -98,6 +102,43 @@ void trata_button_1(uint gpio, uint32_t events)
     }
 }
 
+// Função para tocar uma nota
+void tocar_nota(int duracao_ms, int frequencia_hz) {
+    int periodo_us = 1000000 / frequencia_hz;
+    int ciclos = (duracao_ms * 1000) / periodo_us;
+    
+    for(int i = 0; i < ciclos; i++) {
+        gpio_put(BUZZER_PIN, 1);
+        sleep_us(periodo_us/2);
+        gpio_put(BUZZER_PIN, 0);
+        sleep_us(periodo_us/2);
+    }
+}
+
+// Função para tocar a melodia da Animação 01
+void tocar_melodia_coracao() {
+    // Notas: C4, E4, G4, C5
+    tocar_nota(100, 262); // C4
+    sleep_ms(50);
+    tocar_nota(100, 330); // E4
+    sleep_ms(50);
+    tocar_nota(100, 392); // G4
+    sleep_ms(50);
+    tocar_nota(200, 523); // C5
+}
+
+// Função para tocar a melodia da Animação 02
+void tocar_melodia_estrela() {
+    // Notas: G4, B4, D5, G5
+    tocar_nota(100, 392); // G4
+    sleep_ms(50);
+    tocar_nota(100, 494); // B4
+    sleep_ms(50);
+    tocar_nota(100, 587); // D5
+    sleep_ms(50);
+    tocar_nota(200, 784); // G5
+}
+
 //função principal
 int main()
 {
@@ -129,6 +170,10 @@ int main()
     gpio_set_dir(button_1, GPIO_IN);
     gpio_pull_up(button_1);
 
+    //inicializar o buzzer - GPIO21
+    gpio_init(BUZZER_PIN);
+    gpio_set_dir(BUZZER_PIN, GPIO_OUT);
+
     // Inicializa com todos os LEDs apagados
     desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0);
 
@@ -137,7 +182,7 @@ int main()
     gpio_set_irq_enabled_with_callback(button_1, GPIO_IRQ_EDGE_FALL, true, &trata_button_1);
 
    while (true) {
-    // Leitura dos botões     //*** Esta parte do código é desnecessária e pode ter tirado debounce de interrupção
+    // Leitura dos botões
     if (gpio_get(button_0) == 0) {
         animacao_ativa_0 = true;
     }
@@ -150,8 +195,11 @@ int main()
     // Animação do botão 0 (Coração pulsante vermelho)
     if (animacao_ativa_0) {
         desenho_pio(animacao_botao0.frames[frame_atual_0], pio, sm, 1.0, 0.0, 0.0);
+        if (frame_atual_0 == 0) {
+            tocar_melodia_coracao();
+        }
         frame_atual_0++;
-        desenhou_alguma_animacao = true; //Testar sem  isso
+        desenhou_alguma_animacao = true;
         if (frame_atual_0 >= 15) {
             frame_atual_0 = 0;
             animacao_ativa_0 = false;
@@ -161,20 +209,23 @@ int main()
     // Animação do botão 1 (Estrela girando azul)
     if (animacao_ativa_1) {
         desenho_pio(animacao_botao1.frames[frame_atual_1], pio, sm, 0.0, 0.0, 1.0);
+        if (frame_atual_1 == 0) {
+            tocar_melodia_estrela();
+        }
         frame_atual_1++;
-        desenhou_alguma_animacao = true; // testar sem isso
+        desenhou_alguma_animacao = true;
         if (frame_atual_1 >= 15) {
             frame_atual_1 = 0;
             animacao_ativa_1 = false;
         }
     }
 
-    // Nenhuma animação - mantém apagado //*** Já possui uma matriz de leds apagados
+    // Nenhuma animação - mantém apagado
     if (!desenhou_alguma_animacao) {
-        desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0); //matriz de led apagada
+        desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0);
+        gpio_put(BUZZER_PIN, 0);
     }
 
-    sleep_ms(200); // pequeno atraso entre frames, ajuste conforme necessário 150ms
-}
-
+    sleep_ms(200);
+  }
 }

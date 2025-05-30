@@ -3,11 +3,11 @@
 
 // Estrutura para armazenar uma animação
 typedef struct {
-    double frames[20][25];  // 5 frames de 25 LEDs cada
+    double frames[20][25];  // 20 frames de 25 LEDs cada
 } Animacao;
 
 // Declaração das animações
-extern Animacao animacao_botao0;  // Animação do botão 0 - Coração pulsante
-extern Animacao animacao_botao1;  // Animação do botão 1 - Estrela girando
+extern Animacao animacao_botao0;  // Animação do botão 0 - Animação com SETA PARA BAIXO
+extern Animacao animacao_botao1;  // Animação do botão 1 - Animação com SETA PARA CIMA
 
 #endif 

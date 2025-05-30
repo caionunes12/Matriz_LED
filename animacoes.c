@@ -1,6 +1,6 @@
 #include "animacoes.h"
 
-// Animação para o botão 0 - SETA flutuante
+// Animação para o botão 0 - Animação SETA PARA BAIXO
 Animacao animacao_botao0 = {
     .frames = {
 
@@ -150,7 +150,7 @@ Animacao animacao_botao0 = {
     }
 };
 
-// Animação para o botão 1 - X giratório
+// Animação para o botão 1 - Animação SETA PARA CIMA
 Animacao animacao_botao1 = {
     .frames = {
 
