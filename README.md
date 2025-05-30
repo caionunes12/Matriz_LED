@@ -1,1 +1,11 @@
-Leitura de botão no GPIO 6 e acionamento da Matriz de Leds pela GPIO 07.
+--- Funcionalidade do Código ---
+
+Acionamento dos botões:
+
+Botão A = GPIO 05 
+Botão B = GPIO 06 
+
+Acionamento da Matriz de Leds:
+
+Matriz de Led = GPIO 07
+
