@@ -174,7 +174,7 @@ int main()
         desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0); //matriz de led apagada
     }
 
-    sleep_ms(150); // pequeno atraso entre frames, ajuste conforme necessário 150ms
+    sleep_ms(200); // pequeno atraso entre frames, ajuste conforme necessário 150ms
 }
 
 }
