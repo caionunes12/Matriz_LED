@@ -3,7 +3,7 @@
 
 // Estrutura para armazenar uma animação
 typedef struct {
-    double frames[15][25];  // 5 frames de 25 LEDs cada
+    double frames[20][25];  // 5 frames de 25 LEDs cada
 } Animacao;
 
 // Declaração das animações

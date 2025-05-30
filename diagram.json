@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "Anonymous maker",
+  "author": "Equipe Caio",
   "editor": "wokwi",
   "parts": [
     {
@@ -48,9 +48,16 @@
     {
       "type": "wokwi-pushbutton",
       "id": "btn1",
-      "top": 15.8,
+      "top": 92.6,
       "left": 201.6,
-      "attrs": { "color": "green" }
+      "attrs": { "color": "blue" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn2",
+      "top": 44.6,
+      "left": 201.6,
+      "attrs": { "color": "red", "xray": "1" }
     }
   ],
   "connections": [
@@ -141,8 +148,10 @@
     [ "rgb23:VSS", "gnd5:GND", "green", [ "v0" ] ],
     [ "rgb24:VSS", "gnd5:GND", "green", [ "v0" ] ],
     [ "rgb25:VSS", "gnd5:GND", "green", [ "v0" ] ],
-    [ "pico:GP6", "btn1:1.l", "green", [ "h-28.8", "v-124.8", "h172.8", "v67.2" ] ],
-    [ "btn1:2.l", "pico:GND.6", "green", [ "h-19.2", "v67.4" ] ]
+    [ "pico:GP6", "btn1:1.l", "#8f4814", [ "h-28.8", "v-124.8", "h172.8", "v67.2" ] ],
+    [ "btn1:2.l", "pico:GND.6", "black", [ "h-19.2", "v67.4" ] ],
+    [ "pico:GND.7", "btn2:2.l", "black", [ "h96.31" ] ],
+    [ "btn2:1.l", "pico:GP5", "orange", [ "h-9.6", "v-105.6", "h-172.8", "v115.2" ] ]
   ],
   "dependencies": {}
 }
