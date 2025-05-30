@@ -7,7 +7,7 @@ typedef struct {
 } Animacao;
 
 // Declaração das animações
-extern Animacao animacao_botao0;
-extern Animacao animacao_botao1;
+extern Animacao animacao_botao0;  // Animação do botão 0 - Coração pulsante
+extern Animacao animacao_botao1;  // Animação do botão 1 - Estrela girando
 
 #endif 
