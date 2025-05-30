@@ -74,7 +74,7 @@ void trata_button_0(uint gpio, uint32_t events)
     printf("A = %d\n", a); 
 
     //verifica se passou tempo suficiente desde o ultimo evento
-    if (current_time - last_time_0 > 5000000)    // ms de debounce
+    if (current_time - last_time_0 > 5000000)    // 500ms de debounce
     {
         last_time_0 = current_time;          // Atualiza o tempo do ultimo evento
         printf("mudanca de estado do led. A = %d\n", a);
@@ -92,7 +92,7 @@ void trata_button_1(uint gpio, uint32_t events)
     printf("B = %d\n", b); 
 
     //verifica se passou tempo suficiente desde o ultimo evento
-    if (current_time - last_time_1 > 200000)    // 200ms de debounce
+    if (current_time - last_time_1 > 500000)    // 500ms de debounce
     {
         last_time_1 = current_time;          // Atualiza o tempo do ultimo evento
         printf("mudanca de estado do led. B = %d\n", b);
@@ -200,7 +200,7 @@ int main()
         }
         frame_atual_0++;
         desenhou_alguma_animacao = true;
-        if (frame_atual_0 >= 15) {
+        if (frame_atual_0 >= 20) {
             frame_atual_0 = 0;
             animacao_ativa_0 = false;
         }
@@ -214,7 +214,7 @@ int main()
         }
         frame_atual_1++;
         desenhou_alguma_animacao = true;
-        if (frame_atual_1 >= 15) {
+        if (frame_atual_1 >= 20) {
             frame_atual_1 = 0;
             animacao_ativa_1 = false;
         }
