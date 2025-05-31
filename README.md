@@ -2,10 +2,9 @@
 
 Acionamento dos botões:
 
-Botão A = GPIO 05 
-Botão B = GPIO 06 
+Botão A = button_0 = GPIO 05 --> Ativa a animação 1 na Matriz de Led (SETA PARA BAIXO + ESTRELA) + Buzzer
+Botão B = button_1 = GPIO 06 --> Ativa a animação 2 na Matriz de Led + ESTRELA) + Buzzer
 
-Acionamento da Matriz de Leds:
+--- Link para Vídeo ---
 
-Matriz de Led = GPIO 07
-
+https://youtube.com/shorts/PnjZqocGBUY?feature=share
