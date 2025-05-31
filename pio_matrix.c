@@ -67,39 +67,33 @@ void desenho_pio(double *desenho, PIO pio, uint sm, double r, double g, double b
     }
 }
 
-// Função de Interrupção com Debounce para o botão0
-void trata_button_0(uint gpio, uint32_t events)
+// Função de Interrupção com Debounce para os botões
+void trata_botoes(uint gpio, uint32_t events)
 {
-    //obtem o tempo atual em microssegundos
+    //verifica se passou tempo suficiente 
     uint32_t current_time = to_us_since_boot(get_absolute_time());
-    printf("A = %d\n", a); 
 
-    //verifica se passou tempo suficiente desde o ultimo evento
-    if (current_time - last_time_0 > 5000000)    // 500ms de debounce
-    {
-        last_time_0 = current_time;          // Atualiza o tempo do ultimo evento
-        printf("mudanca de estado do led. A = %d\n", a);
+    // Verifica qual botão foi pressionado
+    if (gpio == button_0) {
 
-        a++;                                //Incrementa a variável de verificação
-      
+        printf("A = %d\n", a); //indica o botão pressionado (Sem debounce)
+
+        if (current_time - last_time_0 > 500000) //tempo do debounce
+         {
+            last_time_0 = current_time;
+            printf("mudança de estado do botão. A = %d\n", a);
+            a++;                       //incrementa a variável de incrementação
+        }
     }
-}
+    else if (gpio == button_1) {
 
-// Função de Interrupção com Debounce para o botão1
-void trata_button_1(uint gpio, uint32_t events)
-{
-    //obtem o tempo atual em microssegundos
-    uint32_t current_time = to_us_since_boot(get_absolute_time());
-    printf("B = %d\n", b); 
+        printf("B = %d\n", b); //indica o botão pressionado (Sem debounce)
 
-    //verifica se passou tempo suficiente desde o ultimo evento
-    if (current_time - last_time_1 > 500000)    // 500ms de debounce
-    {
-        last_time_1 = current_time;          // Atualiza o tempo do ultimo evento
-        printf("mudanca de estado do led. B = %d\n", b);
-
-        b++;                                //Incrementa a variável de verificação
-        
+        if (current_time - last_time_1 > 500000) {
+            last_time_1 = current_time;
+            printf("mudança de estado do botão. B = %d\n", b);
+            b++;                        //incrementa a variável de incrementação
+        }
     }
 }
 
@@ -179,8 +173,8 @@ int main()
     desenho_pio(desenho, pio, sm, 0.0, 0.0, 0.0);
 
     //Interrupção da Gpio Botão ativada
-    gpio_set_irq_enabled_with_callback(button_0, GPIO_IRQ_EDGE_FALL, true, &trata_button_0);
-    gpio_set_irq_enabled_with_callback(button_1, GPIO_IRQ_EDGE_FALL, true, &trata_button_1);
+    gpio_set_irq_enabled_with_callback(button_0, GPIO_IRQ_EDGE_FALL, true, &trata_botoes);
+    gpio_set_irq_enabled(button_1, GPIO_IRQ_EDGE_FALL, true);
 
    while (true) {
     // Leitura dos botões
